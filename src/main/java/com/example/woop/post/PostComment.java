@@ -10,5 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PostComment {
     private String content;
-    private Integer userId;
+    private String userName;
 }

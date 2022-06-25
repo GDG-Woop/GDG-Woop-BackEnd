@@ -5,17 +5,16 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @ToString
 @AllArgsConstructor
-public class PostUserReq {
+public class PostLoginReq {
+    @NotNull(message = "userIdOne must be provided")
     private String userIdOne;
-    private String password;
-    private String fcmToken;
 
-    private int dong;
-    private int ho;
-    private String adminCode;
-    private String nickName;
+    @NotNull(message = "password must be provided")
+    private String password;
 }

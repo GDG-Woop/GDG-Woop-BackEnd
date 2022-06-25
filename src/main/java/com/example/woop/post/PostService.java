@@ -50,7 +50,8 @@ public class PostService {
         } else {
             List<PostComment> postComments = new ArrayList<>();
             for (Comment comment : byPostId) {
-                PostComment postComment = new PostComment(comment.getContent(), comment.getUserId().getUserId());
+                String userName = comment.getUserId().getDong() + "동 " + comment.getUserId().getHo() + "호 " + comment.getUserId().getNickName();
+                PostComment postComment = new PostComment(comment.getContent(), userName);
                 postComments.add(postComment);
             }
             getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(),
@@ -58,6 +59,11 @@ public class PostService {
         }
 
         return getBoardResponse;
+    }
+
+    public List<Post> getPost() {
+        List<Post> list = postRepository.findAll();
+        return list;
     }
 
     public List<GetMeBoardRes> getMeBoard(){

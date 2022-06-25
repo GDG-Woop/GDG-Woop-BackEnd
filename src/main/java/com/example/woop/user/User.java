@@ -28,6 +28,9 @@ public class User {
     @Column(name = "user_id")
     private int userId;
 
+    private String userIdOne;
+    private String password;
+
     private int dong;
     private int ho;
     private String nickName;
@@ -52,5 +55,9 @@ public class User {
     public User(PostUserReq postUserReq) {
         this.dong = postUserReq.getDong();
         this.ho = postUserReq.getHo();
+        this.userIdOne = postUserReq.getUserIdOne();
+        this.password = postUserReq.getPassword();
+        this.nickName = postUserReq.getNickName();
+        this.fcmToken = postUserReq.getFcmToken();
     }
 }

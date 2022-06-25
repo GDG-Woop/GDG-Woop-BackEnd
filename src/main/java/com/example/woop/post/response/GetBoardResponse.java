@@ -19,7 +19,7 @@ public class GetBoardResponse {
     private String title;
     private String content;
     private int tag;
-    private User user;
+    private User userId;
 
     @Nullable
     private List<PostComment> commentList;
