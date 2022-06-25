@@ -9,6 +9,8 @@ import com.example.woop.building.response.BuildingGetOverallRes;
 import com.example.woop.common.utils.ApiUtils.ApiResult;
 import static com.example.woop.common.utils.ApiUtils.success;
 
+import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -20,5 +22,11 @@ public class BuildingController {
     @GetMapping("/overall")
     public ApiResult<BuildingGetOverallRes> getBuildingOverall(@RequestParam(name = "user_id") int userId) {
         return success(buildingService.getBuildingOverall(userId));
+    }
+
+    @GetMapping("/floor")
+    public ApiResult<List<Boolean>> getEmptyRooms(@RequestParam(name = "user_id") int userId,
+            @RequestParam(name = "floor_num") int floor) {
+        return success(buildingService.getEmptyRooms(userId, floor));
     }
 }
