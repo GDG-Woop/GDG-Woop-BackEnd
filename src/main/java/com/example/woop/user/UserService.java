@@ -1,18 +1,15 @@
 package com.example.woop.user;
 
-<<<<<<< HEAD
 import com.example.woop.common.utils.JwtService;
 import com.example.woop.post.Post;
 import com.example.woop.user.request.PostLoginReq;
 import com.example.woop.user.request.PostUserReq;
 import com.example.woop.user.response.GetUserRes;
-=======
 import com.example.woop.building.Building;
 import com.example.woop.firebase.FirebaseCloudMessageService;
 
 import java.io.IOException;
 
->>>>>>> 45f351a72703b7bf45fdb4b30f2cc36ade0b639a
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
