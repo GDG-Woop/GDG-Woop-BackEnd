@@ -23,4 +23,6 @@ public class UserController {
         userService.setUserFCMtoken(userId, token);
         return success("토큰 저장 완료");
     }
+
+    
 }

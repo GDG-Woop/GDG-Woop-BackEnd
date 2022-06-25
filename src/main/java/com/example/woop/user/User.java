@@ -3,8 +3,8 @@ package com.example.woop.user;
 import com.example.woop.building.Building;
 import com.example.woop.comment.Comment;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.example.woop.user.request.PostUserReq;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -19,6 +19,8 @@ import javax.persistence.OneToMany;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class User {
 
     @Id
@@ -45,5 +47,10 @@ public class User {
 
     public int getRoomNumber() {
         return (int) (ho % 100);
+    }
+
+    public User(PostUserReq postUserReq) {
+        this.dong = postUserReq.getDong();
+        this.ho = postUserReq.getHo();
     }
 }
