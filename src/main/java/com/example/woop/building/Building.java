@@ -1,12 +1,11 @@
 package com.example.woop.building;
 
+import com.example.woop.user.User;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.ArrayList;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
@@ -14,7 +13,7 @@ import java.util.List;
 @Entity
 public class Building {
 
-    @Id
+    @Id @GeneratedValue
     private int buildingId;
 
     private int buildingType;
@@ -24,9 +23,7 @@ public class Building {
     private int floor; // 층
     private int roomNumber; //호
 
-
-
-
-
-
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private List<User> userId;
 }

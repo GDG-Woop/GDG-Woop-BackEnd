@@ -1,9 +1,10 @@
 package com.example.woop.post;
 
 import com.example.woop.comment.Comment;
+import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
@@ -14,14 +15,18 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class Post {
-    @Id
+    @Id @GeneratedValue
     private int postId;
+
+    @CreationTimestamp
     private Timestamp createdAt;
     private String title;
 
     @OneToOne
-    @JoinColumn(name = "user_Id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String content;
@@ -29,4 +34,11 @@ public class Post {
 
     @OneToMany
     private List<Comment> commentId = new ArrayList<>();
+
+    public Post(PostBoardRequest postBoardRequest, User user) {
+        this.tag = postBoardRequest.getTag();
+        this.user = user;
+        this.title = postBoardRequest.getTitle();
+        this.content = postBoardRequest.getContent();
+    }
 }
