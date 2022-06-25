@@ -27,6 +27,8 @@ public class Building {
     private int buildingType;
     private String buildingName;
 
+    private int buildingNumber; // 동
+
     private String adminCode;
     private int floor; // 층
     private int roomNumber; // 호

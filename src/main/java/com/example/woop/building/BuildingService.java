@@ -21,6 +21,7 @@ public class BuildingService {
         Building buildingFound = userFound.getBuildingId();
         return new BuildingGetOverallRes(
                 buildingFound.getBuildingName(),
+                buildingFound.getBuildingNumber(),
                 buildingFound.getFloor(),
                 buildingFound.getRoomNumber(),
                 userFound.getFloor(),
