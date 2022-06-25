@@ -5,7 +5,6 @@ import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.stereotype.Service;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -18,7 +17,8 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class Post {
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     private int postId;
 
     @CreationTimestamp
