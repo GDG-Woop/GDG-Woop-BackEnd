@@ -1,5 +1,6 @@
 package com.example.woop.firebase;
 
+import com.example.woop.building.Building;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
 import com.example.woop.user.UserRepository;
@@ -47,6 +48,35 @@ public class FirebaseCloudMessageService {
         Response response = client.newCall(request).execute();
 
         System.out.println(response.body().string());
+    }
+
+    public void findUserByDongHoAndSendMessageTo(int dong, int ho, int userId) throws IOException {
+        Building buildingFound = userRepository.findByUserId(userId).get().getBuildingId();
+
+        List<User> userFound = userRepository.findByBuildingId(buildingFound);
+
+        for (User user : userFound) {
+            if (user.getDong() == dong && user.getHo() == ho) {
+                String message = makeMessage(user.getFcmToken(),
+                        "조금만 조용히 부탁드려요🙏",
+                        "콕 찌르기 요청이 도착했어요!");
+
+                OkHttpClient client = new OkHttpClient();
+                RequestBody requestBody = RequestBody.create(message,
+                        MediaType.get("application/json; charset=utf-8"));
+                Request request = new Request.Builder()
+                        .url(API_URL)
+                        .post(requestBody)
+                        .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
+                        .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
+                        .build();
+
+                Response response = client.newCall(request).execute();
+
+                System.out.println(response.body().string());
+            }
+        }
+
     }
 
     private String makeMessage(String targetToken, String title, String body)

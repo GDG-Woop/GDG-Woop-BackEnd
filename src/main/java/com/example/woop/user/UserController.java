@@ -24,5 +24,10 @@ public class UserController {
         return success("토큰 저장 완료");
     }
 
-    
+    @RequestMapping(value = "/qooq", method = RequestMethod.POST)
+    public ApiResult<String> pickUser(@RequestParam(name = "dong") int dong,
+            @RequestParam(name = "ho") int ho, @RequestParam(name = "user_id") int userId) {
+        userService.pickUser(dong, ho, userId);
+        return success("유저 찌르기 완료");
+    }
 }
