@@ -7,14 +7,18 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Getter
 @Setter
 @Entity
 public class Building {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int buildingId;
 
     private int buildingType;
@@ -22,7 +26,7 @@ public class Building {
 
     private String adminCode;
     private int floor; // 층
-    private int roomNumber; //호
+    private int roomNumber; // 호
 
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

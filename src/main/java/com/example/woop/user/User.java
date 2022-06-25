@@ -22,7 +22,8 @@ import javax.persistence.OneToMany;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) @Column(name = "user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private int userId;
 
     private int dong;
@@ -35,4 +36,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<Comment> commentList;
+
+    public int getFloor() {
+        return (int) (ho / 100);
+    }
 }
