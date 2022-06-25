@@ -1,10 +1,18 @@
 package com.example.woop.user;
 
+<<<<<<< HEAD
 import com.example.woop.common.utils.JwtService;
 import com.example.woop.post.Post;
 import com.example.woop.user.request.PostLoginReq;
 import com.example.woop.user.request.PostUserReq;
 import com.example.woop.user.response.GetUserRes;
+=======
+import com.example.woop.building.Building;
+import com.example.woop.firebase.FirebaseCloudMessageService;
+
+import java.io.IOException;
+
+>>>>>>> 45f351a72703b7bf45fdb4b30f2cc36ade0b639a
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +25,8 @@ import javax.validation.Valid;
 public class UserService {
     private final UserRepository userRepository;
     private final JwtService jwtService;
+    private final FirebaseCloudMessageService firebaseCloudMessageService;
+
     public void setUserFCMtoken(int userId, String token) {
         User userFound = userRepository.findByUserId(userId).get();
         userFound.setFcmToken(token);
@@ -34,4 +44,11 @@ public class UserService {
 //
 //    }
 
+    public void pickUser(int dong, int ho, int userId) {
+        try {
+            firebaseCloudMessageService.findUserByDongHoAndSendMessageTo(dong, ho, userId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

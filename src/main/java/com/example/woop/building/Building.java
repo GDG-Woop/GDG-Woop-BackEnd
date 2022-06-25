@@ -47,4 +47,17 @@ public class Building {
 
         return emptyRooms;
     }
+
+    public List<Boolean> getAllEmptyRoom() {
+        List<Boolean> emptyRooms = new ArrayList<Boolean>(Arrays.asList(new Boolean[floor * roomNumber]));
+        Collections.fill(emptyRooms, Boolean.FALSE);
+        for (User user : userId) {
+            int userFloor = user.getFloor();
+            int userRoomNumber = user.getRoomNumber();
+
+            emptyRooms.set((floor - userFloor) * 5 + (userRoomNumber - 1), Boolean.TRUE);
+        }
+
+        return emptyRooms;
+    }
 }
