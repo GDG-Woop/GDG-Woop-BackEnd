@@ -39,24 +39,21 @@ public class PostService {
    }
 
    public GetBoardResponse getOnePost(int post_id){
-       System.out.println("post_id = " + post_id);
        Post post = postRepository.findByPostId(post_id).orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
        List<Comment> byPostId = commentRepository.findByPostId(post);
 
 
        GetBoardResponse getBoardResponse;
        if(byPostId.isEmpty()){
-           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), null);
+           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(), null);
        }
        else{
            List<PostComment> postComments = new ArrayList<>();
            for(Comment comment : byPostId){
-               PostComment postComment = new PostComment(comment.getContent(), comment.getUserId());
+               PostComment postComment = new PostComment(comment.getContent(), comment.getUserId().getUserId());
                postComments.add(postComment);
            }
-           System.out.println("dd");
-           System.out.println("byPostId = " + byPostId.get(0).getContent().toString());
-           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), postComments);
+           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(), postComments);
        }
 
 
