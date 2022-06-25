@@ -36,7 +36,7 @@ public class User {
     @JoinColumn(name = "building_id")
     private Building buildingId;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany
     private List<Comment> commentList;
 
     public int getFloor() {

@@ -5,7 +5,9 @@ import com.example.woop.post.Post;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -20,6 +22,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,17 +32,17 @@ public class Comment {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User userId;
 
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private Post post;
+    private Post postId;
 
     public Comment(PostCommentReq postCommentReq, User user, Post post) {
         this.content = postCommentReq.getContent();
-        this.user = user;
-        this.post = post;
+        this.userId = user;
+        this.postId = post;
     }
 }

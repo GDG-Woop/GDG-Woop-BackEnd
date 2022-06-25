@@ -32,13 +32,12 @@ public class Building {
     private int roomNumber; // 호
 
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private List<User> userIds;
+    private List<User> userId;
 
     public List<Boolean> getEmptyRoom(int queryFloor) {
         List<Boolean> emptyRooms = new ArrayList<Boolean>(Arrays.asList(new Boolean[floor]));
         Collections.fill(emptyRooms, Boolean.FALSE);
-        for (User user : userIds) {
+        for (User user : userId) {
             if (user.getFloor() == queryFloor) {
                 emptyRooms.set(user.getRoomNumber() - 1, Boolean.TRUE);
             }

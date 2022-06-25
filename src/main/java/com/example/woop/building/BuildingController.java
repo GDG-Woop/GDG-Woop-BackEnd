@@ -27,6 +27,6 @@ public class BuildingController {
     @GetMapping("/floor")
     public ApiResult<List<Boolean>> getEmptyRooms(@RequestParam(name = "user_id") int userId,
             @RequestParam(name = "floor_num") int floor) {
-        return success(buildingService.getEmptyRooms(userId, floor));
+        return success(buildingService.getEmptyRooms(floor, userId));
     }
 }

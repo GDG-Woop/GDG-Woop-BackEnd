@@ -28,7 +28,7 @@ public class Post {
 
     @OneToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User userId;
 
     private String content;
     private int tag;
@@ -39,7 +39,7 @@ public class Post {
 
     public Post(PostBoardRequest postBoardRequest, User user) {
         this.tag = postBoardRequest.getTag();
-        this.user = user;
+        this.userId = user;
         this.title = postBoardRequest.getTitle();
         this.content = postBoardRequest.getContent();
     }
