@@ -30,6 +30,8 @@ public class User {
     private int ho;
     private String nickName;
 
+    private String fcmToken;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "building_id")
     private Building buildingId;
@@ -39,5 +41,9 @@ public class User {
 
     public int getFloor() {
         return (int) (ho / 100);
+    }
+
+    public int getRoomNumber() {
+        return (int) (ho % 100);
     }
 }

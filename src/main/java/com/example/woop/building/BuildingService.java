@@ -1,5 +1,7 @@
 package com.example.woop.building;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.example.woop.building.response.BuildingGetOverallRes;
@@ -22,6 +24,13 @@ public class BuildingService {
                 buildingFound.getFloor(),
                 buildingFound.getRoomNumber(),
                 userFound.getFloor(),
-                userFound.getHo());
+                userFound.getRoomNumber());
+    }
+
+    public List<Boolean> getEmptyRooms(int queryFloor, int userId) {
+        User userFound = userRepository.findByUserId(userId).get();
+        Building buildingFound = userFound.getBuildingId();
+
+        return buildingFound.getEmptyRoom(queryFloor);
     }
 }

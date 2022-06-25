@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -30,6 +32,18 @@ public class Building {
     private int roomNumber; // 호
 
     @OneToMany(fetch = FetchType.LAZY)
-    private List<User> userId = new ArrayList<>();
+    @JoinColumn(name = "user_id")
+    private List<User> userIds;
 
+    public List<Boolean> getEmptyRoom(int queryFloor) {
+        List<Boolean> emptyRooms = new ArrayList<Boolean>(Arrays.asList(new Boolean[floor]));
+        Collections.fill(emptyRooms, Boolean.FALSE);
+        for (User user : userIds) {
+            if (user.getFloor() == queryFloor) {
+                emptyRooms.set(user.getRoomNumber() - 1, Boolean.TRUE);
+            }
+        }
+
+        return emptyRooms;
+    }
 }
