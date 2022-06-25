@@ -3,10 +3,7 @@ package com.example.woop.post;
 import com.example.woop.common.utils.ApiUtils;
 import com.example.woop.post.request.PostBoardRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import com.example.woop.common.utils.ApiUtils.ApiResult;
 import javax.validation.Valid;
 import static com.example.woop.common.utils.ApiUtils.success;
@@ -24,4 +21,8 @@ public class PostController {
         return success(post);
     }
 
+//    @GetMapping("/{type}")
+//    public ApiResult<Post> getPost(@PathVariable int type){
+//        return success();
+//    }
 }

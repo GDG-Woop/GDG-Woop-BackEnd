@@ -1,13 +1,16 @@
 package com.example.woop.post;
 
+import com.example.woop.building.Building;
 import com.example.woop.common.exception.NotFoundException;
 import com.example.woop.post.request.PostBoardRequest;
+import com.example.woop.post.response.GetBoardResponse;
 import com.example.woop.user.User;
 import com.example.woop.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -31,7 +34,11 @@ public class PostService {
         return "게시글이 생성되었습니다.";
    }
 
-//   public Post getPost(){
+//   public List<GetBoardResponse> getOnePost(int type){
+//        int user_id = 1;
 //
+//
+//
+//        return
 //   }
 }
