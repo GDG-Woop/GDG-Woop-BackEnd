@@ -5,6 +5,7 @@ import com.example.woop.post.Post;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.lang.Nullable;
 
 import java.util.List;
 
@@ -13,10 +14,11 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 public class GetBoardResponse {
-//    private String title;
-//    private String content;
-//    private int tag;
+    private String title;
+    private String content;
+    private int tag;
 
-    private Post post;
+
+    @Nullable
     private List<Comment> commentList;
 }

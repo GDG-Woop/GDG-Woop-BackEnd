@@ -38,12 +38,17 @@ public class PostService {
    }
 
    public GetBoardResponse getOnePost(int post_id){
-        int user_id = 1;
 
        Post post = postRepository.findByPostId(post_id).orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
        List<Comment> byPostId = commentRepository.findByPost(post);
+       GetBoardResponse getBoardResponse;
+       if(byPostId.isEmpty()){
+           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), null);
+       }
+       else{
+           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), byPostId);
+       }
 
-       GetBoardResponse getBoardResponse = new GetBoardResponse(post, byPostId);
 
        return getBoardResponse;
    }

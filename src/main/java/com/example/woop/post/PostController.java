@@ -1,6 +1,5 @@
 package com.example.woop.post;
 
-import com.example.woop.common.utils.ApiUtils;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.post.response.GetBoardResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ApiResult<GetBoardResponse> getPost(@PathVariable int postId){
-        GetBoardResponse onePost = postService.getOnePost(postId);
         return success(postService.getOnePost(postId));
     }
 }

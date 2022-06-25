@@ -3,6 +3,7 @@ package com.example.woop.post;
 import com.example.woop.comment.Comment;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -32,6 +33,7 @@ public class Post {
     private String content;
     private int tag;
 
+    @JsonBackReference
     @OneToMany
     private List<Comment> commentId = new ArrayList<>();
 

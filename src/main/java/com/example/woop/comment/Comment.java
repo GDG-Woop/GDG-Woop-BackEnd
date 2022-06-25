@@ -1,6 +1,8 @@
 package com.example.woop.comment;
 
+import com.example.woop.comment.request.PostCommentReq;
 import com.example.woop.post.Post;
+import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.user.User;
 
 import lombok.Getter;
@@ -25,7 +27,8 @@ public class Comment {
 
     private Timestamp createdAt;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
     private String content;
@@ -33,4 +36,10 @@ public class Comment {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
     private Post post;
+
+    public Comment(PostCommentReq postCommentReq, User user, Post post) {
+        this.content = postCommentReq.getContent();
+        this.user = user;
+        this.post = post;
+    }
 }
