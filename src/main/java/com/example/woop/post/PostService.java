@@ -6,6 +6,7 @@ import com.example.woop.comment.CommentRepository;
 import com.example.woop.common.exception.NotFoundException;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.post.response.GetBoardResponse;
+import com.example.woop.post.response.GetMeBoardRes;
 import com.example.woop.user.User;
 import com.example.woop.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,5 +58,22 @@ public class PostService {
         }
 
         return getBoardResponse;
+    }
+
+    public List<GetMeBoardRes> getMeBoard(){
+        int userId = 1;
+        User user = userRepository.findByUserId(userId).orElseThrow(
+                ()-> new NotFoundException("사용자가 없습니다.")
+        );
+
+        List<Post> postList = postRepository.findByUserId(user);
+        List<GetMeBoardRes> getMeBoardResList = new ArrayList<>();
+
+        for(Post post : postList){
+            User userIdOne = post.getUserId();
+            GetMeBoardRes getMeBoardRes = new GetMeBoardRes(userIdOne.getDong(), userIdOne.getHo(), userIdOne.getNickName(), post.getTitle(), post.getContent(), post.getTag());
+            getMeBoardResList.add(getMeBoardRes);
+        }
+        return getMeBoardResList;
     }
 }

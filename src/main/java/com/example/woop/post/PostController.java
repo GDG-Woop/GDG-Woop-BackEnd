@@ -4,6 +4,7 @@ import com.example.woop.firebase.FirebaseCloudMessageService;
 import com.example.woop.firebase.RequestDto;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.post.response.GetBoardResponse;
+import com.example.woop.post.response.GetMeBoardRes;
 import com.example.woop.user.UserService;
 
 import lombok.RequiredArgsConstructor;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.woop.common.utils.ApiUtils.ApiResult;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 import static com.example.woop.common.utils.ApiUtils.success;
 
@@ -42,4 +44,8 @@ public class PostController {
         return success(postService.getOnePost(postId));
     }
 
+    @GetMapping
+    public ApiResult<List<GetMeBoardRes>> getMePost(){
+        return success(postService.getMeBoard());
+    }
 }
