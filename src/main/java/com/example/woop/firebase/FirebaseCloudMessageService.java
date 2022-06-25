@@ -1,5 +1,9 @@
 package com.example.woop.firebase;
 
+import com.example.woop.post.request.PostBoardRequest;
+import com.example.woop.user.User;
+import com.example.woop.user.UserRepository;
+import com.example.woop.user.UserService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,15 +18,21 @@ import java.io.IOException;
 import java.util.List;
 
 import static okhttp3.MediaType.*;
+
 @Component
 @RequiredArgsConstructor
 public class FirebaseCloudMessageService {
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/android-****/messages:send";
     private final ObjectMapper objectMapper;
+    private final UserRepository userRepository;
 
-    public void sendMessageTo(String targetToken, String title, String body) throws IOException {
-        String message = makeMessage(targetToken, title, body);
+    public void findBuildingAndSendMessageTo(int userId, int postId) throws IOException {
+        User userFound = userRepository.findByUserId(userId).get();
+
+        String message = makeMessage(userFound.getFcmToken(),
+                Integer.toString(userFound.getDong()) + "-" + Integer.toString(userFound.getHo()),
+                Integer.toString(postId));
 
         OkHttpClient client = new OkHttpClient();
         RequestBody requestBody = RequestBody.create(message,
@@ -39,7 +49,8 @@ public class FirebaseCloudMessageService {
         System.out.println(response.body().string());
     }
 
-    private String makeMessage(String targetToken, String title, String body) throws JsonParseException, JsonProcessingException {
+    private String makeMessage(String targetToken, String title, String body)
+            throws JsonParseException, JsonProcessingException {
         FcmMessage fcmMessage = FcmMessage.builder()
                 .message(FcmMessage.Message.builder()
                         .token(targetToken)
@@ -47,8 +58,9 @@ public class FirebaseCloudMessageService {
                                 .title(title)
                                 .body(body)
                                 .image(null)
-                                .build()
-                        ).build()).validateOnly(false).build();
+                                .build())
+                        .build())
+                .validateOnly(false).build();
 
         return objectMapper.writeValueAsString(fcmMessage);
     }

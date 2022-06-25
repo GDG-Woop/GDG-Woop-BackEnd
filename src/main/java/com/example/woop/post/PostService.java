@@ -24,9 +24,8 @@ public class PostService {
     private final CommentRepository commentRepository;
 
     @Transactional
-    public String createPost(PostBoardRequest postBoardRequest){
+    public int createPost(PostBoardRequest postBoardRequest) {
         int user_id = 1;
-
 
         User byUserId = userRepository.findByUserId(user_id)
                 .orElseThrow(() -> new NotFoundException("회원이 존재하지 않습니다."));
@@ -34,29 +33,29 @@ public class PostService {
         System.out.println(byUserId.getUserId());
 
         Post post = new Post(postBoardRequest, byUserId);
-        postRepository.save(post);
-        return "게시글이 생성되었습니다.";
-   }
+        Post postNew = postRepository.save(post);
 
-   public GetBoardResponse getOnePost(int post_id){
-       Post post = postRepository.findByPostId(post_id).orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
-       List<Comment> byPostId = commentRepository.findByPostId(post);
+        return postNew.getPostId();
+    }
 
+    public GetBoardResponse getOnePost(int post_id) {
+        Post post = postRepository.findByPostId(post_id).orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+        List<Comment> byPostId = commentRepository.findByPostId(post);
 
-       GetBoardResponse getBoardResponse;
-       if(byPostId.isEmpty()){
-           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(), null);
-       }
-       else{
-           List<PostComment> postComments = new ArrayList<>();
-           for(Comment comment : byPostId){
-               PostComment postComment = new PostComment(comment.getContent(), comment.getUserId().getUserId());
-               postComments.add(postComment);
-           }
-           getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(), postComments);
-       }
+        GetBoardResponse getBoardResponse;
+        if (byPostId.isEmpty()) {
+            getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(),
+                    null);
+        } else {
+            List<PostComment> postComments = new ArrayList<>();
+            for (Comment comment : byPostId) {
+                PostComment postComment = new PostComment(comment.getContent(), comment.getUserId().getUserId());
+                postComments.add(postComment);
+            }
+            getBoardResponse = new GetBoardResponse(post.getTitle(), post.getContent(), post.getTag(), post.getUserId(),
+                    postComments);
+        }
 
-
-       return getBoardResponse;
-   }
+        return getBoardResponse;
+    }
 }

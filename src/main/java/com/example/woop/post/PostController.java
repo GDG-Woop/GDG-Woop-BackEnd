@@ -4,6 +4,8 @@ import com.example.woop.firebase.FirebaseCloudMessageService;
 import com.example.woop.firebase.RequestDto;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.post.response.GetBoardResponse;
+import com.example.woop.user.UserService;
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.example.woop.common.utils.ApiUtils.ApiResult;
@@ -21,21 +23,23 @@ public class PostController {
     private final FirebaseCloudMessageService firebaseCloudMessageService;
 
     @PostMapping
-    public ApiResult<String> createPost(@Valid @RequestBody PostBoardRequest postBoardRequest){
-        String post = postService.createPost(postBoardRequest);
-        return success(post);
+    public ApiResult<String> createPost(@Valid @RequestBody PostBoardRequest postBoardRequest) {
+        int postId = postService.createPost(postBoardRequest);
+        int userId = 1;
+        try {
+            firebaseCloudMessageService.findBuildingAndSendMessageTo(userId, postId);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return success("게시글이 생성되었습니다.");
     }
 
     @GetMapping("/{postId}")
-    public ApiResult<GetBoardResponse> getPost(@PathVariable int postId, @RequestBody RequestDto requestDTO) throws IOException {
-
-        firebaseCloudMessageService.sendMessageTo(
-                requestDTO.getTargetToken(),
-                requestDTO.getTitle(),
-                requestDTO.getBody());
+    public ApiResult<GetBoardResponse> getPost(@PathVariable int postId, @RequestBody RequestDto requestDTO)
+            throws IOException {
 
         return success(postService.getOnePost(postId));
     }
-
 
 }
