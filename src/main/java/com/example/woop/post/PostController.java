@@ -2,6 +2,7 @@ package com.example.woop.post;
 
 import com.example.woop.common.utils.ApiUtils;
 import com.example.woop.post.request.PostBoardRequest;
+import com.example.woop.post.response.GetBoardResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import com.example.woop.common.utils.ApiUtils.ApiResult;
@@ -21,8 +22,9 @@ public class PostController {
         return success(post);
     }
 
-//    @GetMapping("/{type}")
-//    public ApiResult<Post> getPost(@PathVariable int type){
-//        return success();
-//    }
+    @GetMapping("/{postId}")
+    public ApiResult<GetBoardResponse> getPost(@PathVariable int postId){
+        GetBoardResponse onePost = postService.getOnePost(postId);
+        return success(postService.getOnePost(postId));
+    }
 }

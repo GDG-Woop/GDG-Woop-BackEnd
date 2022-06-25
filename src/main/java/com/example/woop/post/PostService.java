@@ -1,6 +1,8 @@
 package com.example.woop.post;
 
 import com.example.woop.building.Building;
+import com.example.woop.comment.Comment;
+import com.example.woop.comment.CommentRepository;
 import com.example.woop.common.exception.NotFoundException;
 import com.example.woop.post.request.PostBoardRequest;
 import com.example.woop.post.response.GetBoardResponse;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class PostService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
 
     @Transactional
     public String createPost(PostBoardRequest postBoardRequest){
@@ -34,11 +37,14 @@ public class PostService {
         return "게시글이 생성되었습니다.";
    }
 
-//   public List<GetBoardResponse> getOnePost(int type){
-//        int user_id = 1;
-//
-//
-//
-//        return
-//   }
+   public GetBoardResponse getOnePost(int post_id){
+        int user_id = 1;
+
+       Post post = postRepository.findByPostId(post_id).orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+       List<Comment> byPostId = commentRepository.findByPost(post);
+
+       GetBoardResponse getBoardResponse = new GetBoardResponse(post, byPostId);
+
+       return getBoardResponse;
+   }
 }
